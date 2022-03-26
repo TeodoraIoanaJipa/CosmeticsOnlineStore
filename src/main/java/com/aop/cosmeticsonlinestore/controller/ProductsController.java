@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/products")
@@ -44,5 +43,18 @@ public class ProductsController {
         model.addAttribute("products", products);
 
         return "/home/main";
+    }
+
+    @GetMapping("/{id}")
+    public String getProductById(@PathVariable("id") Long id, Model model) throws Exception {
+        Optional<Product> optionalProduct = productService.findById(id);
+
+        if (optionalProduct.isPresent()) {
+            Product product = optionalProduct.get();
+            model.addAttribute("product", product);
+            return "/home/view";
+        } else {
+            throw new Exception("Product not found");
+        }
     }
 }
