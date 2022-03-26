@@ -1,44 +1,20 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    Store
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</head>
+<head th:replace="home/header :: head"></head>
 <body>
-
-<div>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Bine ai venit!</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="home/header :: navbar"></div>
 <div class="container">
     <div class="hero-unit">
-        <h1>Test</h1>
-        <p>
-            Bine ati venit
-        </p>
-        <a href="/signup" th:href="@{/signup}" class="btn btn-large btn-success">Sign up</a>
         <div class="card-group">
             <div class="col-sm-3 d-flex align-items-stretch" th:each="product : ${products}">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" th:src="${product.getImageURL()}" alt="PRoduct image">
+                <div class="card mb-3 ml-3" style="width: 20rem;">
+                    <img class="card-img-top" th:src="${product.getImageURL()}" alt="Product image"
+                         style="height: 320px;">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${product.getTitle()}"></h5>
-                        <p class="card-text text-truncate" th:text="${product.getDescription()}"></p>
-                        <a class="btn btn-primary" th:href="@{/product/{path} (path = ${product.getId()})}">Vezi mai multe</a>
+                        <p class="card-text" th:text="${product.getDescription()}"></p>
+                        <a class="btn" th:href="@{/product/{path} (path = ${product.getId()})}">Vezi mai
+                            multe</a>
                     </div>
                 </div>
                 <!--                    <h6><span th:text="${product.getPrice()}"></span> lei.</h6>-->
@@ -47,6 +23,6 @@
     </div>
     <div>&copy; 2016 The Static Templates</div>
 </div>
-
+<footer th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>
