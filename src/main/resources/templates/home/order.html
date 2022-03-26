@@ -19,65 +19,57 @@
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Prenume:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="firstName" th:value="${order} ? ${order.firstName} : ''"
+                            <input type="text" name="firstName" th:value="${validOrder} ? ${validOrder.firstName} : ''"
                                    class="form-control" th:classappend="${firstNameError} ? ' is-invalid'" />
-                            <div th:if="${firstNameError}" class="invalid-feedback" th:text="${firstNameError}"></div>
+                            <div th:if="${firstNameError}" class="text-danger" th:text="${firstNameError}"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Nume:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="lastName" th:value="${order} ? ${order.lastName} : ''"
+                            <input type="text" name="lastName" th:value="${validOrder} ? ${validOrder.lastName} : ''"
                                    class="form-control" th:classappend="${lastNameError} ? ' is-invalid'" />
-                            <div th:if="${lastNameError}" class="invalid-feedback" th:text="${lastNameError}"></div>
+                            <div th:if="${lastNameError}" class="text-danger" th:text="${lastNameError}"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Județ:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="county" th:value="${order} ? ${order.address.county} : ''"
+                            <input type="text" name="county" th:value="${validOrder} ? ${validOrder.county} : ''"
                                    class="form-control" th:classappend="${countyError} ? ' is-invalid'" />
-                            <div th:if="${countytError}" class="invalid-feedback" th:text="${countyError}"></div>
+                            <div th:if="${countytError}" class="text-danger" th:text="${countyError}"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Oraș:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="city" th:value="${order} ? ${order.address.city} : ''"
+                            <input type="text" name="city" th:value="${validOrder} ? ${validOrder.city} : ''"
                                    class="form-control" th:classappend="${cityError} ? ' is-invalid'" />
-                            <div th:if="${cityError}" class="invalid-feedback" th:text="${cityError}"></div>
+                            <div th:if="${cityError}" class="text-danger" th:text="${cityError}"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Stradă:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="street" th:value="${order} ? ${order.address.street} : ''"
+                            <input type="text" name="street" th:value="${validOrder} ? ${validOrder.street} : ''"
                                    class="form-control" th:classappend="${streetError} ? ' is-invalid'" />
-                            <div th:if="${streetError}" class="invalid-feedback" th:text="${streetError}"></div>
+                            <div th:if="${streetError}" class="text-danger" th:text="${streetError}"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Cod poștal:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="postalCode" th:value="${order} ? ${order.address.postalCode} : ''"
+                            <input type="text" name="postalCode" th:value="${validOrder} ? ${validOrder.postalCode} : ''"
                                    class="form-control" th:classappend="${postalCodeError} ? ' is-invalid'" />
-                            <div th:if="${postalCodeError}" class="invalid-feedback" th:text="${postalCodeError}"></div>
+                            <div th:if="${postalCodeError}" class="text-danger" th:text="${postalCodeError}"></div>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-sm-2 col-form-label">Telefon:</label>
                         <div class="col-sm-8">
-                            <input type="text" name="phoneNumber" th:value="${order} ? ${order.phoneNumber} : ''"
+                            <input type="text" name="phoneNumber" th:value="${validOrder} ? ${validOrder.phoneNumber} : ''"
                                    class="form-control" th:classappend="${phoneNumberError} ? ' is-invalid'"/>
-                            <div th:if="${phoneNumberError}" class="invalid-feedback" th:text="${phoneNumberError}"></div>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Email:</label>
-                        <div class="col-sm-8">
-                            <input type="text" name="email" th:value="${order} ? ${order.email} : ''"
-                                   class="form-control" th:classappend="${emailError} ? ' is-invalid'"/>
-                            <div th:if="${emailError}" class="invalid-feedback" th:text="${emailError}"></div>
+                            <div th:if="${phoneNumberError}" class="text-danger" th:text="${phoneNumberError}"></div>
                         </div>
                     </div>
                 </div>

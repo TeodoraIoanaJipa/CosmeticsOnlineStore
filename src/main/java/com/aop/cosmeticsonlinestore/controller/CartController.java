@@ -1,6 +1,7 @@
 package com.aop.cosmeticsonlinestore.controller;
 
 import com.aop.cosmeticsonlinestore.model.*;
+import com.aop.cosmeticsonlinestore.model.request.OrderRequest;
 import com.aop.cosmeticsonlinestore.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -77,25 +78,27 @@ public class CartController {
     @GetMapping("/order")
     public String getOrder(Model model) {
         model.addAttribute("products", cartProducts);
+        model.addAttribute("validOrder", new OrderRequest());
         return "/home/order";
     }
 
     @PostMapping("/order")
-    public String saveOrder(@Valid Order validOrder, BindingResult bindingResult, Model model) throws Exception {
+    public String saveOrder(@Valid OrderRequest validOrder, BindingResult bindingResult, Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = getErrors(bindingResult);
             model.mergeAttributes(errors);
             model.addAttribute("products", cartProducts);
+            model.addAttribute("validOrder", validOrder);
             return "/home/order";
         } else {
             Optional<User> optionalUser = userService.findById(Long.valueOf(1));
             User user = optionalUser.get();
 
             Address address = new Address();
-            address.setCounty(validOrder.getAddress().getCounty());
-            address.setCity(validOrder.getAddress().getCity());
-            address.setStreet(validOrder.getAddress().getStreet());
-            address.setPostalCode(validOrder.getAddress().getPostalCode());
+            address.setCounty(validOrder.getCounty());
+            address.setCity(validOrder.getCity());
+            address.setStreet(validOrder.getStreet());
+            address.setPostalCode(validOrder.getPostalCode());
             Address newAddress = addressService.save(address);
 
             Order order = new Order();
