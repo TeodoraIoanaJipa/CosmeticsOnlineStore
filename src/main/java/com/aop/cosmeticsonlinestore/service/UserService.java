@@ -18,7 +18,7 @@ public class UserService {
 
     public User convertFromRegistrationRequest(RegistrationRequest registrationRequest) {
         User user = new User();
-        user.setEmail(registrationRequest.getUsername());
+        user.setEmail(registrationRequest.getEmail());
         user.setUsername(registrationRequest.getUsername());
         user.setFirstName(registrationRequest.getFirstName());
         user.setLastName(registrationRequest.getLastName());

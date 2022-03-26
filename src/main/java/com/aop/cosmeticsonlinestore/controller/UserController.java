@@ -97,15 +97,26 @@ public class UserController {
     }
 
     @GetMapping("/login")
-    public String login() {
-        return "home/login";
+    public String login(Model model) {
+        AuthRequest request = new AuthRequest();
+        model.addAttribute("request", request);
+        return "home/user/login";
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Valid AuthRequest request) {
+    public Object login(@ModelAttribute("request") @Valid AuthRequest request,
+                                      BindingResult bindingResult,
+                                      Model model) {
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = getErrors(bindingResult);
+
+            model.mergeAttributes(errors);
+
+            return "home/user/login";
+        }
         try {
             Authentication authenticate = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 
             User user = (User) authenticate.getPrincipal();
 
