@@ -116,7 +116,7 @@ public class UserController {
         }
         try {
             Authentication authenticate = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
             User user = (User) authenticate.getPrincipal();
 
