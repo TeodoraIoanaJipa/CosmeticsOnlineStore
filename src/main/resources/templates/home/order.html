@@ -1,0 +1,104 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+
+<body>
+<div th:replace="home/header :: navbar"></div>
+<div id="container">
+    <div class="container mt-5 pb-5">
+        <form action="/order" method="post" enctype="multipart/form-data">
+            <p class="h4 mb-4 text-center">Comanda</p>
+            <br>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Prenume:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="firstName" th:value="${validOrder} ? ${validOrder.firstName} : ''"
+                                   class="form-control" th:classappend="${firstNameError} ? ' is-invalid'" />
+                            <div th:if="${firstNameError}" class="text-danger" th:text="${firstNameError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Nume:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="lastName" th:value="${validOrder} ? ${validOrder.lastName} : ''"
+                                   class="form-control" th:classappend="${lastNameError} ? ' is-invalid'" />
+                            <div th:if="${lastNameError}" class="text-danger" th:text="${lastNameError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Județ:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="county" th:value="${validOrder} ? ${validOrder.county} : ''"
+                                   class="form-control" th:classappend="${countyError} ? ' is-invalid'" />
+                            <div th:if="${countytError}" class="text-danger" th:text="${countyError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Oraș:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="city" th:value="${validOrder} ? ${validOrder.city} : ''"
+                                   class="form-control" th:classappend="${cityError} ? ' is-invalid'" />
+                            <div th:if="${cityError}" class="text-danger" th:text="${cityError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Stradă:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="street" th:value="${validOrder} ? ${validOrder.street} : ''"
+                                   class="form-control" th:classappend="${streetError} ? ' is-invalid'" />
+                            <div th:if="${streetError}" class="text-danger" th:text="${streetError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Cod poștal:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="postalCode" th:value="${validOrder} ? ${validOrder.postalCode} : ''"
+                                   class="form-control" th:classappend="${postalCodeError} ? ' is-invalid'" />
+                            <div th:if="${postalCodeError}" class="text-danger" th:text="${postalCodeError}"></div>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Telefon:</label>
+                        <div class="col-sm-8">
+                            <input type="text" name="phoneNumber" th:value="${validOrder} ? ${validOrder.phoneNumber} : ''"
+                                   class="form-control" th:classappend="${phoneNumberError} ? ' is-invalid'"/>
+                            <div th:if="${phoneNumberError}" class="text-danger" th:text="${phoneNumberError}"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="container-fluid">
+                        <div class="row" th:fragment="list">
+                            <div class="col-lg-6 d-flex align-items-stretch" th:each="product : ${products}">
+                                <div class="card mb-5" th:if="${product.value.getImageURL()}">
+                                    <img th:src="${product.value.getImageURL()}" class="rounded mx-auto w-50">
+                                    <div class="card-body text-center">
+                                        <h5 th:text="${product.value.getTitle()}"></h5>
+                                        <h6 th:text="${product.value.getBrand()}"></h6>
+                                        <h6><span th:text="${product.value.getPrice()}"></span>,00 RON</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-dark btn-lg btn-success px-5 float-right">Confirmă comanda</button>
+                    <input type="hidden" name="totalPrice" th:value="${#aggregates.sum(products.![value.price])}">
+                    <div class="row">
+                        <p> </p>
+                        <h4>Total de plată: <span th:text="${#aggregates.sum(products.![value.price])}"></span> RON</h4>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

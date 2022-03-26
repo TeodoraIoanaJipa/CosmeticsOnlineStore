@@ -5,6 +5,7 @@ import com.aop.cosmeticsonlinestore.model.User;
 import com.aop.cosmeticsonlinestore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -23,5 +24,9 @@ public class UserService {
         user.setFirstName(registrationRequest.getFirstName());
         user.setLastName(registrationRequest.getLastName());
         return user;
+    }
+
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 }

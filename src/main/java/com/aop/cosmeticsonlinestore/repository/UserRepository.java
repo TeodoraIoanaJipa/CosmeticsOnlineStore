@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
     User save(User entity);
+    @Override
+    Optional<User> findById(Long aLong);
 }
