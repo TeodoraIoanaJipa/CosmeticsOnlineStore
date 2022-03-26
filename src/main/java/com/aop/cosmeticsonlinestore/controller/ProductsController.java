@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/product")
 public class ProductsController {
     
     private Logger logger = LoggerFactory.getLogger(ProductsController.class);
@@ -26,7 +25,7 @@ public class ProductsController {
     @Autowired
     private ProductService productService;
 
-    @GetMapping("/all")
+    @GetMapping("/product/all")
     public Page<Product> getProduct(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable) {
         try {
             Page<Product> products = productService.findAllProductsPageable(pageable);
@@ -45,7 +44,7 @@ public class ProductsController {
         return "/home/main";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/product/{id}")
     public String getProductById(@PathVariable("id") Long id, Model model) throws Exception {
         Optional<Product> optionalProduct = productService.findById(id);
 

@@ -13,9 +13,10 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
 </head>
-
+<head th:replace="home/header :: head"></head>
 <body>
-    <div style="position: absolute; top: 20%; right: 0; left: 0" class="container">
+    <div th:replace="home/header :: navbar"></div>
+    <div class="container">
             <div class="col-md-4 offset-md-4">
                 <h4 style="text-align: center">Intra in contul tau</h4>
                 <hr/>
@@ -35,7 +36,9 @@
             <div class="form-group row">
                 <button type="submit" class="btn btn-dark mx-3">Autentificare</button>
             </div>
+            <button type="button" class="btn btn-dark mx-3" th:action="/user/signup">Inregistreaza-te</button>
         </form>
     </div>
+    <footer th:insert="~{home/footer :: footer}"></footer>
 </body>
 </html>

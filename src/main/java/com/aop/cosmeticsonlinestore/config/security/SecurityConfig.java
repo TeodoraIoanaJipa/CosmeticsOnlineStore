@@ -70,7 +70,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 // Our public endpoints
-                .antMatchers("/api/public/**").permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers(HttpMethod.GET, "/home/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/product/*").permitAll()
                 .antMatchers(HttpMethod.POST, "/user/*").permitAll()
                 .antMatchers(HttpMethod.GET, "/user/*").permitAll()
