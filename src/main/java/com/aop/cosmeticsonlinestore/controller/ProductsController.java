@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.Optional;
 
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/product")
 public class ProductsController {
     
     private Logger logger = LoggerFactory.getLogger(ProductsController.class);

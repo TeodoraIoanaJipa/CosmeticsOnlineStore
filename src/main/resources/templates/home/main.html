@@ -3,6 +3,12 @@
 <head th:replace="home/header :: head"></head>
 <body>
 <div th:replace="home/header :: navbar"></div>
+
+<style>
+    .bg-black {
+        background-color: black;
+    }
+</style>
 <div class="container">
     <div class="hero-unit">
         <div class="card-group">
@@ -21,7 +27,6 @@
             </div>
         </div>
     </div>
-    <div>&copy; 2016 The Static Templates</div>
 </div>
 <footer th:insert="~{home/footer :: footer}"></footer>
 </body>

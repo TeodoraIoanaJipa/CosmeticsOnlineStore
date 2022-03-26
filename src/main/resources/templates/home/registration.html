@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="home/header :: head"></head>
+
+<body>
+<div th:replace="home/header :: navbar"></div>
+
+<style>
+    .bg-black {
+        background-color: black;
+    }
+</style>
+
+<div style="" class="container">
+    <div class="col-md-4 offset-md-4">
+        <h4 style="text-align: center">Inregistreaza-te acum</h4>
+        <hr/>
+    </div>
+
+    <form class="col-md-4 offset-md-4" method="post" action='/user/signup'>
+        <div class="form-group row">
+            <label for="email"><strong>Email</strong></label>
+            <input type="email" name="email" id="email" class="form-control">
+        </div>
+        <div class="form-group row">
+            <label for="password"><strong>Parola</strong></label>
+            <input type="password" name="password" id="password" class="form-control">
+        </div>
+        <div class="form-group row">
+            <label for="password"><strong>Confirma parola: </strong></label>
+            <input type="password" name="password2" id="password" class="form-control">
+        </div>
+        <div class="form-group row">
+            <button type="submit" class="btn btn-dark mx-3">Inregistrare</button>
+        </div>
+        <div class="g-recaptcha" data-sitekey="6Lc5cLkZAAAAAN8mFk85HQieB9toPcWFoW0RXCNR"></div>
+        <div th:if="${captchaError}" class="alert-danger" th:text="${captchaError}" role="alert"></div>
+
+    </form>
+</div>
+
+<footer th:insert="~{home/footer :: footer}"></footer>
+</body>
+</html>
