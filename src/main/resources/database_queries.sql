@@ -1,3 +1,60 @@
+
+create table addresses
+(
+    id          integer not null
+        constraint addresses_pk
+            primary key,
+    street      varchar(255),
+    city        varchar(100),
+    county      varchar(100),
+    postal_code varchar(15)
+);
+
+alter table addresses
+    owner to postgres;
+
+create table store_user
+(
+    id              integer      not null
+        constraint user_pk primary key,
+    username        varchar(100) not null,
+    first_name      varchar(50),
+    last_name       varchar(100),
+    activation_code varchar(255),
+    active          boolean      not null,
+    email           varchar(100),
+    password        varchar(100) not null
+);
+
+alter table store_user
+    owner to postgres;
+
+create unique index store_user_id_uindex
+    on store_user (id);
+
+create table products
+(
+    id                 integer     not null
+        constraint product_pk primary key,
+    title              varchar(50) not null,
+    description        varchar(255),
+    brand              varchar(100),
+    volume             varchar(20),
+    price              float4      not null,
+    product_type       varchar(255),
+    year               int4        not null,
+    product_base_notes varchar(255),
+    image_url          varchar(255)
+);
+
+alter table products
+    owner to postgres;
+
+create unique index product_id_index
+    on products (id);
+
+
+
 create table orders
 (
     id           integer not null
@@ -17,33 +74,18 @@ alter table orders
 create unique index orders_id_uindex
     on orders (id);
 
-create table addresses (
-    id integer not null
-            constraint addresses_pk
-    primary key,
-    street varchar(255),
-    city varchar(100),
-    county varchar(100),
-    postal_code varchar(15)
+create table order_item
+(
+    product_id integer not null
+        constraint product_item_fk references products
+            on update set null,
+    order_id   integer not null
+        constraint order_fk references orders (id)
+            on update set null,
+    user_id    integer not null
+        constraint user_fk references store_user (id)
+            on update set null
 );
 
-alter table addresses
+alter table order_item
     owner to postgres;
-
-create table store_user(
-    id integer not null
-       constraint user_pk primary key,
-    username varchar(100) not null,
-    first_name   varchar(50),
-    last_name    varchar(100),
-    activation_code varchar(255),
-    active boolean not null,
-    email varchar(100),
-    password varchar(100) not null
-);
-
-alter table store_user
-    owner to postgres;
-
-create unique index store_user_id_uindex
-    on store_user (id);

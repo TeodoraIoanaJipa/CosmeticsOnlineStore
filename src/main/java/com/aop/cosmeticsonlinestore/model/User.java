@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "store_user")
@@ -28,7 +29,7 @@ public class User {
 
     private boolean active;
 
-    @NotBlank(message="email is required")
+    @NotNull
     private String email;
 
     private String password;
