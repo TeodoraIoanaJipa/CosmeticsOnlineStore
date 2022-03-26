@@ -34,6 +34,9 @@ values ('Euphoria', 'Apa de parfum Calvin Klein Euphoria ne prezintă o lume mis
         'violeta, mahon, cihlimbar, mosc',
         'https://cdn.notinoimg.com/detail_zoom_2k/calvin-klein/cakephw_aedp10_03-o/calvin-klein-euphoria-eau-de-parfum-pentru-femei___32.jpg');
 
+insert into store_user(id, username, first_name, last_name, activation_code, active, email, password)
+values(1, 'dianapascal', 'Diana', 'Pascal', '1234', true, 'diana.pascal12@gmail.com', 'test');
+
 
 
 
