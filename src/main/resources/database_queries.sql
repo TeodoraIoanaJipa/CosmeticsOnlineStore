@@ -13,6 +13,8 @@ create table addresses
 alter table addresses
     owner to postgres;
 
+CREATE SEQUENCE USER_SEQ increment by 1;
+
 create table store_user
 (
     id              integer      not null

@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 @Data
 public class RegistrationRequest {
     @Email
-    @NotNull(message = "Emailul nu trebuie sa lipseasca.")
+    @NotBlank(message = "Emailul nu trebuie sa lipseasca.")
     private String email;
 
     @NotBlank(message = "Username-ul nu trebuie sa lipseasca.")
