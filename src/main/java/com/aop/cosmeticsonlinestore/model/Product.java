@@ -27,27 +27,27 @@ public class Product {
     @Column(name = "description")
     private String description;
 
-//    @Length(max = 100)
+    @Size(max = 100)
     private String brand;
 
-//    @Length(max = 20)
+    @Size(max = 20)
     private String volume;
 
     @Column(name = "price")
     @NotNull
     private Float price;
 
-//    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "product_type")
     private String productType;
 
     private Integer year;
 
-//    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "product_base_notes")
     private String fragranceTopNotes;
 
-//    @Length(max = 255)
+    @Size(max = 255)
     @Column(name = "image_url")
     private String imageURL;
 }

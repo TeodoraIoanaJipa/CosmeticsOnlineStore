@@ -6,11 +6,6 @@
 <body>
 <div th:replace="home/header :: navbar"></div>
 
-<style>
-    .bg-black {
-        background-color: black;
-    }
-</style>
 
 <div style="" class="container">
     <div class="col-md-4 offset-md-4">
@@ -21,15 +16,28 @@
     <form class="col-md-4 offset-md-4" method="post" action='/user/signup'>
         <div class="form-group row">
             <label for="email"><strong>Email</strong></label>
-            <input type="email" name="email" id="email" class="form-control">
+            <input type="email" name="email" id="email" th:value="${registrationRequest} ? ${registrationRequest.email} : ''" class="form-control">
+            <div th:if="${emailError}" class="text-danger" th:text="${emailError}"></div>
+        </div>
+        <div class="form-group row">
+            <label for="username"><strong>Username</strong></label>
+            <input type="text" name="username" id="username" th:value="${registrationRequest} ? ${registrationRequest.username} : ''" class="form-control">
+            <div th:if="${usernameError}" class="text-danger" th:text="${usernameError}"></div>
+        </div>
+        <div class="form-group row">
+            <label for="firstName"><strong>Nume</strong></label>
+            <input type="text" name="firstName" id="firstName" th:value="${registrationRequest} ? ${registrationRequest.firstName} : ''" class="form-control">
+            <div th:if="${firstNameError}" class="text-danger" th:text="${firstNameError}"></div>
         </div>
         <div class="form-group row">
             <label for="password"><strong>Parola</strong></label>
             <input type="password" name="password" id="password" class="form-control">
+            <div th:if="${passwordError}" class="text-danger" th:text="${passwordError}"></div>
         </div>
         <div class="form-group row">
             <label for="password"><strong>Confirma parola: </strong></label>
-            <input type="password" name="password2" id="password" class="form-control">
+            <input type="password" name="password2" id="password2" class="form-control">
+            <div th:if="${password2Error}" class="text-danger" th:text="${password2Error}"></div>
         </div>
         <div class="form-group row">
             <button type="submit" class="btn btn-dark mx-3">Inregistrare</button>
