@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping("/api/products")
+@RequestMapping("/products")
 public class ProductsController {
     
     private Logger logger = LoggerFactory.getLogger(ProductsController.class);
@@ -36,5 +36,14 @@ public class ProductsController {
             logger.debug("Exception occured");
         }
         return null;
+    }
+
+    @GetMapping("/")
+    public String home(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
+                       Model model) {
+        Page<Product> products = productService.findAllProductsPageable(pageable);
+        model.addAttribute("products", products);
+
+        return "home/main";
     }
 }
