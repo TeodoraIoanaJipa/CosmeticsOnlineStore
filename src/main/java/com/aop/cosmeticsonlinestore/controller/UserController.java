@@ -9,9 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,6 +39,8 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    private final AuthenticationManager authenticationManager;
 
     private final JwtTokenUtil jwtTokenUtil;
 
@@ -70,13 +76,16 @@ public class UserController {
             return "home/registration";
         }
 
-        User user = userService.convertFromRegistrationRequest(registrationRequest);
-        user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
-        user = userService.save(user);
+        try {
+            User user = userService.convertFromRegistrationRequest(registrationRequest);
+            user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
+            user = userService.save(user);
 
-        logger.debug("Registration with success", user.getUsername());
-
-        return "redirect:/login";
+            logger.debug("Registration with success", user.getUsername());
+            return "home/user/login";
+        }catch(Exception exception) {
+            return "home/registration";
+        }
     }
 
     static Map<String, String> getErrors(BindingResult bindingResult) {
@@ -92,19 +101,19 @@ public class UserController {
         return "home/login";
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<User> login(@RequestBody @Valid AuthRequest request) {
-//        try {
-//            Authentication authenticate = authenticationManager
-//                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-//
-//            User user = (User) authenticate.getPrincipal();
-//
-//            return ResponseEntity.ok()
-//                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
-//                    .body(userViewMapper.toUserView(user));
-//        } catch (BadCredentialsException ex) {
+        try {
+            Authentication authenticate = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+
+            User user = (User) authenticate.getPrincipal();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
+                    .body(user);
+        } catch (BadCredentialsException ex) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//        }
+        }
     }
 }

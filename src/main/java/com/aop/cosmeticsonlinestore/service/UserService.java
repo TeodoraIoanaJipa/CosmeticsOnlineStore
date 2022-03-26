@@ -12,6 +12,7 @@ public class UserService {
     private UserRepository userRepository;
 
     public User save(User user) {
+        user.setActive(false);
         return userRepository.save(user);
     }
 

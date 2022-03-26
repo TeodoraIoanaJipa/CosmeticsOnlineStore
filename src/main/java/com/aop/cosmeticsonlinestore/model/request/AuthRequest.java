@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 public class AuthRequest {
-    @NotNull
+    @NotNull(message = "Username-ul nu trebuie sa lipseasca.")
     private String username;
     @NotNull
     private String password;
