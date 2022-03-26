@@ -88,4 +88,4 @@ create table order_item
 );
 
 alter table order_item
-    owner to postgres;
+    owner to loauhxaxhnoppe;
