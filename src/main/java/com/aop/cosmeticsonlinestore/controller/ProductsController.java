@@ -39,11 +39,10 @@ public class ProductsController {
     }
 
     @GetMapping("/")
-    public String home(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable,
-                       Model model) {
+    public String home(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable, Model model) {
         Page<Product> products = productService.findAllProductsPageable(pageable);
         model.addAttribute("products", products);
 
-        return "home/main";
+        return "/home/main";
     }
 }

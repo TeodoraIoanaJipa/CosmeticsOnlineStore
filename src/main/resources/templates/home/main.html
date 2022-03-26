@@ -1,11 +1,11 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-ome/
+    Home/
 </head>
 <body>
 
-<div th:replace="fragments/header :: header">
+<div>
     <!-- ============================================================================ -->
     <!-- This content is only used for static prototyping purposes (natural templates)-->
     <!-- and is therefore entirely optional, as this markup fragment will be included -->
@@ -14,7 +14,7 @@ ome/
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">Static header</a>
+                <a class="navbar-brand" href="#">Bine ai venit!</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
@@ -28,14 +28,25 @@ ome/
     <div class="hero-unit">
         <h1>Test</h1>
         <p>
-            Welcome to the Spring MVC Quickstart application!
-            Get started quickly by signing up.
+            Bine ati venit
         </p>
         <p>
             <a href="/signup" th:href="@{/signup}" class="btn btn-large btn-success">Sign up</a>
+
+        <div class="col-lg-3 d-flex align-items-stretch" th:each="product : ${products}">
+            <div class="card mb-5" th:if="${product.getImageURL()}">
+                <img th:src="${product.getImageURL()}" class="rounded mx-auto w-50">
+                <div class="card-body text-center">
+                    <h5 th:text="${product.getTitle()}"></h5>
+                    <h6 th:text="${product.getDescription()}"></h6>
+                    <h6><span th:text="${product.getPrice()}"></span> lei.</h6>
+                    <a th:href="@{/product/{path} (path = ${product.getId()})}" class="btn btn-dark">See more</a>
+                </div>
+            </div>
+        </div>
         </p>
     </div>
-    <div th:replace="fragments/footer :: footer">&copy; 2016 The Static Templates</div>
+    <div>&copy; 2016 The Static Templates</div>
 </div>
 
 </body>
