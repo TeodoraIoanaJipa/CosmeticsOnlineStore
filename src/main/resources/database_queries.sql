@@ -34,8 +34,7 @@ create unique index store_user_id_uindex
 
 create table products
 (
-    id                 integer     not null
-        constraint product_pk primary key,
+    id serial constraint product_pk primary key,
     title              varchar(50) not null,
     description        varchar(255),
     brand              varchar(100),
