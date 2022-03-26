@@ -59,4 +59,16 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "username='" + username + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", activationCode='" + activationCode + '\'' +
+                ", active=" + active +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
