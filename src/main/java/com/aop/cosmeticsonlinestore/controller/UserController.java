@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 
 
 @Controller
-@RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
@@ -40,11 +39,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private final AuthenticationManager authenticationManager = null;
+    private final AuthenticationManager authenticationManager;
 
-    private final JwtTokenUtil jwtTokenUtil = null;
+    private final JwtTokenUtil jwtTokenUtil;
 
-    private final PasswordEncoder passwordEncoder = null;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserController(AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil, PasswordEncoder passwordEncoder) {
+        this.authenticationManager = authenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @GetMapping("/signup")
     public String registration(Model model) {
@@ -54,7 +59,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String registration(
+    public String saveRegistration(
             @Valid @ModelAttribute("registrationRequest") RegistrationRequest registrationRequest,
             BindingResult bindingResult,
             Model model
@@ -105,9 +110,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public Object login(@ModelAttribute("request") @Valid AuthRequest request,
-                                      BindingResult bindingResult,
-                                      Model model) {
+    public Object saveLogin(@ModelAttribute("request") @Valid AuthRequest request,
+                            BindingResult bindingResult,
+                            Model model) throws Exception {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = getErrors(bindingResult);
 
@@ -115,17 +120,14 @@ public class UserController {
 
             return "home/user/login";
         }
-        try {
-            Authentication authenticate = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-            User user = (User) authenticate.getPrincipal();
+        Authentication authenticate = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-            return ResponseEntity.ok()
-                    .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
-                    .body(user);
-        } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+        User user = (User) authenticate.getPrincipal();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, jwtTokenUtil.generateAccessToken(user))
+                .body(user);
     }
 }
