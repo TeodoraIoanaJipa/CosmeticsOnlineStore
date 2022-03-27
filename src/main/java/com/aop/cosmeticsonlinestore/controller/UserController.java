@@ -99,6 +99,7 @@ public class UserController {
     @GetMapping("/login")
     public String login(Model model) {
         AuthRequest request = new AuthRequest();
+        request.hasValidFields();
         model.addAttribute("request", request);
         return "home/user/login";
     }

@@ -46,12 +46,11 @@ public class CartController {
     }
 
     @PostMapping("/cart/add")
-    public String addToCart(@RequestParam("productId") Long productId) throws Exception {
+    public String addToCart(@RequestParam("productId") Long productId)  {
         Optional<Product> optionalProduct = productService.findById(productId);
-        User user = new User();
-        user.isValid("test");
+
         if (!optionalProduct.isPresent()) {
-            throw new Exception("Product not found");
+            return "err";
         } else {
             Product product = optionalProduct.get();
             cartProducts.put(product.getId(), product);
@@ -62,6 +61,8 @@ public class CartController {
     @GetMapping("/cart")
     public String getCart(Model model) {
         model.addAttribute("cartProducts", cartProducts);
+        User user = new User();
+        user.isValid("test");
         return "/home/cart";
     }
 
