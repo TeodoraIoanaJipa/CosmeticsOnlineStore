@@ -14,6 +14,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.aspectj.util.LangUtil.isEmpty;
@@ -57,7 +58,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 authentication = new UsernamePasswordAuthenticationToken(
                 userDetails, null,
                 userDetails == null ?
-                        List.of() : userDetails.getAuthorities()
+                        new ArrayList<>() : userDetails.getAuthorities()
         );
 
         authentication.setDetails(
