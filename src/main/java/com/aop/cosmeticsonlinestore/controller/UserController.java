@@ -40,11 +40,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    private final AuthenticationManager authenticationManager;
+    private final AuthenticationManager authenticationManager = null;
 
-    private final JwtTokenUtil jwtTokenUtil;
+    private final JwtTokenUtil jwtTokenUtil = null;
 
-    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder = null;
 
     @GetMapping("/signup")
     public String registration(Model model) {

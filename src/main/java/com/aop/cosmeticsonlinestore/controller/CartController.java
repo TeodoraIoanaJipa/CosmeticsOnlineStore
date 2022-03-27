@@ -48,7 +48,9 @@ public class CartController {
     @PostMapping("/cart/add")
     public String addToCart(@RequestParam("productId") Long productId) throws Exception {
         Optional<Product> optionalProduct = productService.findById(productId);
-        if (optionalProduct.isEmpty()) {
+        User user = new User();
+        user.isValid("test");
+        if (!optionalProduct.isPresent()) {
             throw new Exception("Product not found");
         } else {
             Product product = optionalProduct.get();
@@ -66,7 +68,7 @@ public class CartController {
     @PostMapping("/cart/removeItem")
     public String removeItemFromCart(@RequestParam("productId") Long productId) throws Exception {
         Optional<Product> optionalProduct = productService.findById(productId);
-        if (optionalProduct.isEmpty()) {
+        if (!optionalProduct.isPresent()) {
             throw new Exception("Product not found");
         } else {
             Product product = optionalProduct.get();
