@@ -90,3 +90,14 @@ create table order_item
 
 alter table order_item
     owner to loauhxaxhnoppe;
+
+ALTER TABLE ADDRESSES
+ALTER COLUMN ID
+ADD GENERATED ALWAYS AS IDENTITY;
+
+ALTER TABLE ORDERS
+ALTER COLUMN ID
+ADD GENERATED ALWAYS AS IDENTITY;
+
+ALTER TABLE ORDER_ITEM
+ADD COLUMN ID serial constraint order_item_pk PRIMARY KEY;

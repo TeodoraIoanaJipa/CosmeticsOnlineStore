@@ -117,13 +117,13 @@ public class CartController {
                 orderItem.setProduct(cartProduct.getValue());
                 orderItemService.save(orderItem);
             }
-            return "redirect:/finalizeOrder";
+            return "redirect:/order/finalizeOrder";
         }
     }
 
-    @GetMapping("/finalizeOrder")
+    @GetMapping("/order/finalizeOrder")
     public String finalizeOrder() {
-        return "/home/finzalize_order";
+        return "/home/finalize_order";
     }
 
     static Map<String, String> getErrors(BindingResult bindingResult) {

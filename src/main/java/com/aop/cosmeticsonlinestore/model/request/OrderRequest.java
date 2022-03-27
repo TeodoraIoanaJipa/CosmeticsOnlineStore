@@ -28,10 +28,10 @@ public class OrderRequest {
     @NotBlank(message="Strada este obligatorie")
     private String street;
 
-    @NotBlank(message="Orașul este obligatorie")
+    @NotBlank(message="Orașul este obligatoriu")
     private String city;
 
-    @NotBlank(message="Județul este obligatorie")
+    @NotBlank(message="Județul este obligatoriu")
     private String county;
 
     @NotBlank(message="Codul poștal este obligatorie")
