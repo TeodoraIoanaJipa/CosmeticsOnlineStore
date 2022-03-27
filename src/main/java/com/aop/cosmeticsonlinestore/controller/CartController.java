@@ -110,13 +110,17 @@ public class CartController {
             order.setAddress(newAddress);
             Order newOrder = orderService.save(order);
 
+            Float total = Float.valueOf(0);
             for (Map.Entry<Long, Product> cartProduct : cartProducts.entrySet()) {
                 OrderItem orderItem = new OrderItem();
                 orderItem.setOrder(newOrder);
                 orderItem.setUser(user);
                 orderItem.setProduct(cartProduct.getValue());
                 orderItemService.save(orderItem);
+                total += cartProduct.getValue().getPrice();
             }
+
+            order.setTotal(total);
             return "redirect:/order/finalizeOrder";
         }
     }

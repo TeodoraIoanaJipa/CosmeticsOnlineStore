@@ -39,6 +39,9 @@ public class Order {
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 
+    @Column(name = "total")
+    private Float total;
+
     public Long getId() {
         return id;
     }
@@ -93,5 +96,13 @@ public class Order {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
     }
 }
