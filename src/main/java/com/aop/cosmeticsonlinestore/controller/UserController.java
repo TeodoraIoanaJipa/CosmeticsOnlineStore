@@ -84,7 +84,6 @@ public class UserController {
             user.setPassword(passwordEncoder.encode(registrationRequest.getPassword()));
             user = userService.save(user);
 
-            logger.debug("Registration with success", user.getUsername());
             return "home/user/login";
         }catch(Exception exception) {
             return "home/registration";
@@ -111,13 +110,7 @@ public class UserController {
     public Object saveLogin(@ModelAttribute("request") @Valid AuthRequest request,
                             BindingResult bindingResult,
                             Model model) throws Exception {
-        if (bindingResult.hasErrors()) {
-            Map<String, String> errors = getErrors(bindingResult);
 
-            model.mergeAttributes(errors);
-
-            return "home/user/login";
-        }
 
         Authentication authenticate = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));

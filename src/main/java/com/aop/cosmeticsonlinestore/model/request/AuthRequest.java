@@ -1,9 +1,15 @@
 package com.aop.cosmeticsonlinestore.model.request;
 
 import lombok.Data;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 @Data
 public class AuthRequest {
@@ -32,5 +38,24 @@ public class AuthRequest {
 
     public boolean hasValidFields() {
         return true;
+    }
+
+    Map<String, String> getErrors(BindingResult bindingResult) {
+        Collector<FieldError, ?, Map<String, String>> collector = Collectors.toMap(
+                fieldError -> fieldError.getField() + "Error",
+                FieldError::getDefaultMessage
+        );
+        return bindingResult.getFieldErrors().stream().collect(collector);
+    }
+
+    public String validateData(BindingResult bindingResult, Model model){
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = getErrors(bindingResult);
+
+            model.mergeAttributes(errors);
+
+            return "home/user/login";
+        }
+        return null;
     }
 }

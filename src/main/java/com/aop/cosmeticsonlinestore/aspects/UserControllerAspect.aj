@@ -2,6 +2,7 @@ package com.aop.cosmeticsonlinestore.aspects;
 
 import com.aop.cosmeticsonlinestore.model.request.AuthRequest;
 import com.aop.cosmeticsonlinestore.model.request.RegistrationRequest;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
@@ -29,6 +30,8 @@ public aspect UserControllerAspect {
 
         before(AuthRequest request, BindingResult bindingResult, Model model):
                 loginMethod(request, bindingResult, model) {
+                AuthRequest authRequest = new AuthRequest();
+                assert authRequest.validateData(bindingResult, model) == null;
                 System.out.println("Before user " + request.getUsername() + "tries to login ");
         }
 
@@ -44,8 +47,9 @@ public aspect UserControllerAspect {
         }
 
         //doar daca credentialele nu sunt bune
-        after(AuthRequest request, BindingResult bindingResult, Model model) throwing(): loginMethod(request, bindingResult, model) {
-                System.out.println("User could not login with username : " + request.getUsername());
-        }
+       after(AuthRequest request, BindingResult bindingResult, Model model) throwing(BadCredentialsException exception): loginMethod(request, bindingResult, model) {
+               System.out.println("User could not login with username : " + request.getUsername());
+               System.out.println("Bad credencials exception  : " + request.getUsername());
+       }
 }
 
