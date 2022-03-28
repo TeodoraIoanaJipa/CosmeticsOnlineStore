@@ -2,6 +2,7 @@ package com.aop.cosmeticsonlinestore.controller;
 
 import com.aop.cosmeticsonlinestore.model.Product;
 import com.aop.cosmeticsonlinestore.service.ProductService;
+import com.aop.cosmeticsonlinestore.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class ProductsController {
     @Autowired
     private ProductService productService;
 
+    @Autowired
+    private UserService userService;
+
+
     @GetMapping("/product/all")
     public Page<Product> getProduct(@PageableDefault(sort = {"id"}, direction = Sort.Direction.ASC, size = 12) Pageable pageable) {
         try {
@@ -44,6 +49,13 @@ public class ProductsController {
         return "/home/main";
     }
 
+    @GetMapping("/contact")
+    public String home(Model model) {
+        model.addAttribute("logged", userService.isUserLogged());
+
+        return "/contact";
+    }
+
     @GetMapping("/product/{id}")
     public String getProductById(@PathVariable("id") Long id, Model model) throws Exception {
         Optional<Product> optionalProduct = productService.findById(id);
@@ -51,6 +63,7 @@ public class ProductsController {
         if (optionalProduct.isPresent()) {
             Product product = optionalProduct.get();
             model.addAttribute("product", product);
+//            model.addAttribute("logged", userService.isUserLogged());
             return "/home/view";
         } else {
             throw new Exception("Product not found");

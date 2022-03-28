@@ -1,6 +1,7 @@
 package com.aop.cosmeticsonlinestore.config.security;
 
 import com.aop.cosmeticsonlinestore.repository.UserRepository;
+import com.aop.cosmeticsonlinestore.service.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,19 +16,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.aspectj.util.LangUtil.isEmpty;
+
 
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public JwtTokenFilter(JwtTokenUtil jwtTokenUtil,
-                          UserRepository userRepo) {
+                          UserRepository userRepo,
+                          UserService userService) {
         this.jwtTokenUtil = jwtTokenUtil;
         this.userRepository = userRepo;
+        this.userService = userService;
     }
 
     @Override
@@ -36,14 +39,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                                     FilterChain chain)
             throws ServletException, IOException {
         // Get authorization header and validate
-        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
-        if (isEmpty(header) || !header.startsWith("Bearer ")) {
-            chain.doFilter(request, response);
-            return;
-        }
+//        final String header = request.getHeader(HttpHeaders.AUTHORIZATION);
+//        if (isEmpty(header) || !header.startsWith("Bearer ")) {
+//            chain.doFilter(request, response);
+//            return;
+//        }
 
         // Get jwt token and validate
-        final String token = header.split(" ")[1].trim();
+        final String token = (userService.isUserLogged()) ? userService.getToken() : null;
+//        final String token = header.split(" ")[1].trim();
         if (!jwtTokenUtil.validate(token)) {
             chain.doFilter(request, response);
             return;

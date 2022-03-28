@@ -1,7 +1,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <head th:fragment="head" xmlns:th="http://www.thymeleaf.org">
+    <head th:fragment="head" xmlns:th="http://www.thymeleaf.org"
+          xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
         <title>The store</title>
 
         <meta charset="utf-8"/>
@@ -54,33 +55,47 @@
                         <a class="nav-link pl-5 pr-5 anchor-color" href="/">Produse</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link pl-5 pr-5 anchor-color" href="/contacts">Contact</a>
+                        <a class="nav-link pl-5 pr-5 anchor-color" href="/contact">Contact</a>
                     </li>
                 </ul>
 
                 <ul class="navbar-nav ml-auto">
                     <form class="form-inline d-flex justify-content-center md-form form-sm mr-3" method="get"
                           action="/search">
-                        <input class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" name="filter"
+                        <input style="display: none" class="form-control form-control-sm mr-3 w-75 rounded-0" type="text" name="filter"
                                placeholder="Cauta produsele tale cosmetice preferate"
                                aria-label="Search"/>
-                        <button type="submit"><i class="fas fa-search fa-1x" aria-hidden="true"></i></button>
+                        <button style="display: none" type="submit"><i class="fas fa-search fa-1x" aria-hidden="true"></i></button>
                     </form>
 
-                    <li class="nav-item">
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <a class="nav-link" href="/cart"><i class="fas fa-shopping-cart fa-1 pl-2 pr-2"
                                                             style="color:black"></i></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link anchor-color" href="/user/login">Cont</a>
+                        <a class="nav-link anchor-color" sec:authorize="isAnonymous()" th:href="@{~/user/login}">Login</a>
                     </li>
                 </ul>
 
-                <form action="/logout" method="post" sec:authorize="isAuthenticated()">
+                <form action="/user/logout" method="post" sec:authorize="isAuthenticated()">
                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                     <input type="submit" class="bg-black" style="color:white" value="Logout"/>
                 </form>
             </div>
         </nav>
     </div>
+    <script>
+        function goToCart() {
+        $.ajax({
+            url: '/cart', // here , I don't know syntax, I can't use [@{/registeredUserList(type=0,userId=id0001,page=0,size=10)}] the path in here . how can I write the syntax.
+            type: 'GET',
+            headers: {
+                "Authorization": "Bearer " + "token"
+            },
+            success: function (data) {
+               console.log(data);
+            }
+        })
+    }
+    </script>
 </div>

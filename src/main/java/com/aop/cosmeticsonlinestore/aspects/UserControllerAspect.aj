@@ -1,6 +1,5 @@
 package com.aop.cosmeticsonlinestore.aspects;
 
-import com.aop.cosmeticsonlinestore.model.User;
 import com.aop.cosmeticsonlinestore.model.request.AuthRequest;
 import com.aop.cosmeticsonlinestore.model.request.RegistrationRequest;
 import org.springframework.ui.Model;
