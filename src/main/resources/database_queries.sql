@@ -104,3 +104,18 @@ ADD COLUMN ID serial constraint order_item_pk PRIMARY KEY;
 
 ALTER TABLE orders
 ADD TOTAL float;
+
+create table product_viwes
+(
+    product_id integer not null
+        constraint product_item_fk1 references products
+            on update set null,
+    views_number integer default 0
+);
+
+alter table product_viwes
+rename to product_views;
+
+ALTER TABLE product_views
+ADD COLUMN ID serial constraint product_view_pk PRIMARY KEY;
+
