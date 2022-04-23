@@ -111,15 +111,18 @@ public class UserController {
                             BindingResult bindingResult,
                             Model model) throws Exception {
 
+        try {
+            Authentication authenticate = authenticationManager
+                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-        Authentication authenticate = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            User user = (User) authenticate.getPrincipal();
 
-        User user = (User) authenticate.getPrincipal();
+            userService.generateToken(user);
 
-        userService.generateToken(user);
-
-        return "redirect:/";
+            return "redirect:/";
+        } catch (Exception exception) {
+            return "home/user/login";
+        }
     }
 
     @PostMapping("/logout")

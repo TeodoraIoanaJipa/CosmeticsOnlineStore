@@ -15,24 +15,24 @@ public class UserControllerAspectV2 {
 
     private static final Logger logger = LoggerFactory.getLogger(UserControllerAspectV2.class);
 
-    @Pointcut("execution(String saveRegistration(..))")
-    public void registration(){}//pointcut name
+    @Pointcut("execution(* saveRegistration(..))")
+    public void registration() {
+    }
 
 
     @Before("registration()")
-    public void beforeRegistration(JoinPoint jp)
-    {
+    public void beforeRegistration(JoinPoint jp) {
         RegistrationRequest registrationRequest = (RegistrationRequest) jp.getArgs()[0];
         logger.info("User is trying to register with username :" + registrationRequest.getUsername());
     }
 
     @Pointcut("execution(Object saveLogin(..))")
-    public void login(){}
+    public void login() {
+    }
 
 
     @After("login()")
-    public void myadvice(JoinPoint jp)
-    {
+    public void myadvice(JoinPoint jp) {
         AuthRequest authRequest = (AuthRequest) jp.getArgs()[0];
         logger.info("Logged in with succes for username " + authRequest.getUsername());
     }
