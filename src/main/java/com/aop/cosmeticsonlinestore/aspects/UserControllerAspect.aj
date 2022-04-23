@@ -8,19 +8,20 @@ import org.springframework.validation.BindingResult;
 
 public aspect UserControllerAspect {
 
-        pointcut registration(RegistrationRequest registrationRequest, BindingResult bindingResult, Model model)
-                : execution(String com.aop.cosmeticsonlinestore.controller.UserController.saveRegistration(RegistrationRequest, BindingResult, Model))
-                && args(registrationRequest, bindingResult, model);
+//        pointcut registration(RegistrationRequest registrationRequest, BindingResult bindingResult, Model model)
+//                : execution(String com.aop.cosmeticsonlinestore.controller.UserController.saveRegistration(RegistrationRequest, BindingResult, Model))
+//                && args(registrationRequest, bindingResult, model);
+//
+//        before(RegistrationRequest registrationRequest, BindingResult bindingResult, Model model):
+//                registration(registrationRequest, bindingResult, model) {
+//                System.out.println("USer is trying to register with username :" + registrationRequest.getUsername());
+//        }
 
-        before(RegistrationRequest registrationRequest, BindingResult bindingResult, Model model):
-                registration(registrationRequest, bindingResult, model) {
-                System.out.println("USer is trying to register with username :" + registrationRequest.getUsername());
-        }
-
-        after(RegistrationRequest registrationRequest, BindingResult bindingResult, Model model)
-                returning(): registration(registrationRequest, bindingResult, model) {
-                System.out.println("User registration : " + registrationRequest.getUsername());
-        }
+        //doar daca datele sunt valide
+//        after(RegistrationRequest registrationRequest, BindingResult bindingResult, Model model)
+//                returning(): registration(registrationRequest, bindingResult, model) {
+//                System.out.println("User registration : " + registrationRequest.getUsername());
+//        }
 
         //    pointcut loginMethod(): execution(Object com.aop.cosmeticsonlinestore.controller.UserController.saveLogin(..));
 
@@ -30,8 +31,7 @@ public aspect UserControllerAspect {
 
         before(AuthRequest request, BindingResult bindingResult, Model model):
                 loginMethod(request, bindingResult, model) {
-                AuthRequest authRequest = new AuthRequest();
-                assert authRequest.validateData(bindingResult, model) == null;
+                assert request.validateData(bindingResult, model).equals("/");
                 System.out.println("Before user " + request.getUsername() + "tries to login ");
         }
 
@@ -47,7 +47,8 @@ public aspect UserControllerAspect {
         }
 
         //doar daca credentialele nu sunt bune
-       after(AuthRequest request, BindingResult bindingResult, Model model) throwing(BadCredentialsException exception): loginMethod(request, bindingResult, model) {
+       after(AuthRequest request, BindingResult bindingResult, Model model) throwing(BadCredentialsException exception):
+               loginMethod(request, bindingResult, model) {
                System.out.println("User could not login with username : " + request.getUsername());
                System.out.println("Bad credencials exception  : " + request.getUsername());
        }

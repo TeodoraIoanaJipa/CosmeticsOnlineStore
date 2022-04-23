@@ -56,6 +56,6 @@ public class AuthRequest {
 
             return "home/user/login";
         }
-        return null;
+        return "/";
     }
 }
