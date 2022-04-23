@@ -12,7 +12,7 @@ public class OrderServiceAspectV2 {
     private static final Logger logger = LoggerFactory.getLogger(UserServiceAspectV2.class);
 
     @AfterReturning(
-            pointcut = "execution(* OrderService.*(..))", returning = "result")
+            pointcut = "execution(* com.aop.cosmeticsonlinestore.service.OrderService.*(..))", returning = "result")
     public void saveOrder(JoinPoint jp, Object result) {
         logger.info("Order - Order saved to database : " + result);
     }

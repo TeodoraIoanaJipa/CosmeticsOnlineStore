@@ -105,4 +105,18 @@ public class Order {
     public void setTotal(Float total) {
         this.total = total;
     }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", orderDate=" + orderDate +
+                ", user=" + user +
+                ", address=" + address +
+                ", total=" + total +
+                '}';
+    }
 }
