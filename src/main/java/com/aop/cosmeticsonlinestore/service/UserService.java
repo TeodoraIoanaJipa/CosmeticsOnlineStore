@@ -1,12 +1,16 @@
 package com.aop.cosmeticsonlinestore.service;
 
 import com.aop.cosmeticsonlinestore.config.security.JwtTokenUtil;
+import com.aop.cosmeticsonlinestore.model.request.AuthRequest;
 import com.aop.cosmeticsonlinestore.model.request.RegistrationRequest;
 import com.aop.cosmeticsonlinestore.model.User;
 import com.aop.cosmeticsonlinestore.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.Optional;
 
@@ -27,6 +31,12 @@ public class UserService {
     public User save(User user) {
         user.setActive(true);
         return userRepository.save(user);
+    }
+
+    public Authentication login(AuthenticationManager authenticationManager, AuthRequest request) throws Exception {
+        Authentication authenticate = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        return authenticate;
     }
 
     public User convertFromRegistrationRequest(RegistrationRequest registrationRequest) {

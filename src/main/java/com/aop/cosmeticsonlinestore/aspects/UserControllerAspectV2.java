@@ -3,10 +3,7 @@ package com.aop.cosmeticsonlinestore.aspects;
 import com.aop.cosmeticsonlinestore.model.request.AuthRequest;
 import com.aop.cosmeticsonlinestore.model.request.RegistrationRequest;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.After;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,6 +31,6 @@ public class UserControllerAspectV2 {
     @After("login()")
     public void myadvice(JoinPoint jp) {
         AuthRequest authRequest = (AuthRequest) jp.getArgs()[0];
-        logger.info("Logged in with succes for username " + authRequest.getUsername());
+        logger.info("Trying login for username " + authRequest.getUsername());
     }
 }

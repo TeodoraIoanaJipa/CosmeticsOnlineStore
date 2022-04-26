@@ -112,8 +112,7 @@ public class UserController {
                             Model model) throws Exception {
 
         try {
-            Authentication authenticate = authenticationManager
-                    .authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            Authentication authenticate = userService.login(authenticationManager, request);
 
             User user = (User) authenticate.getPrincipal();
 
