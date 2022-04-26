@@ -57,4 +57,14 @@ public class OrderItem {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "OrderItem{" +
+                "id=" + id +
+                ", product=" + product +
+                ", order=" + order +
+                ", user=" + user +
+                '}';
+    }
 }
